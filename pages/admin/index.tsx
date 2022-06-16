@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-const Editor = dynamic(() => import("../components/WYSIWYGeditor"), {
+const Editor = dynamic(() => import("../../components/WYSIWYGeditor"), {
   ssr: false,
 });
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import { db, storage, useAuth } from "../firebase";
+import { db, storage, useAuth } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import axios from "axios";
-import { url_api } from "../constant";
+import { url_api } from "../../constant";
 import Multiselect from "multiselect-react-dropdown";
-import Hero from "../components/hero";
-import Header from "../components/Header";
+import Hero from "../../components/hero";
+import Header from "../../components/Header";
 
 export async function getStaticProps() {
   let response = await axios.get(url_api + "tags");
@@ -51,8 +51,6 @@ const AdminPage = ({ content, tags }) => {
     try {
       const docRef = await addDoc(collection(db, "articles"), {
         content: article,
-        title,
-        image,
       });
       const tags = selectedTags?.map((el) => el?.id);
       console.log("Document written with ID: ", docRef.id);
@@ -67,6 +65,9 @@ const AdminPage = ({ content, tags }) => {
         date,
         auteur,
       };
+      console.log(data);
+      const response = await axios.post(url_api + "articles", data);
+      console.log(response);
     } catch (e) {
       console.error("Error adding document: ", e);
     }

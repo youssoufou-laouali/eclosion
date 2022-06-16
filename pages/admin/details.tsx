@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { collection, doc, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 
-interface ArticleSchema {
+export interface ArticleSchema {
   id: string;
   content?: string;
   image?: string;
