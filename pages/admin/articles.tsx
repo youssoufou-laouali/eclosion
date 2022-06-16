@@ -34,7 +34,6 @@ const Articles = () => {
 
   return (
     <div>
-      {console.log(articles)}
       {articles.map((article, index) => (
         <Dropdown
           content={article?.content}
